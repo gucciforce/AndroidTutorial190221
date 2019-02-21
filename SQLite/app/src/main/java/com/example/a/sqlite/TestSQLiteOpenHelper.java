@@ -11,7 +11,7 @@ public class TestSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table student(id integer primary key autoincrement , name text, age integer, addrss text";
+        String sql = "create table student(id integer primary key autoincrement , name text, age integer, addrss text)";
         db.execSQL(sql);
     }
 
