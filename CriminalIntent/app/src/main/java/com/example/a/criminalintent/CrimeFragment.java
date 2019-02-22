@@ -2,7 +2,9 @@ package com.example.a.criminalintent;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,8 @@ import android.widget.EditText;
 import com.example.a.criminalintent.model.Crime;
 import com.example.a.criminalintent.model.CrimeLab;
 
+import java.sql.DataTruncation;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -31,9 +35,9 @@ public class CrimeFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
     private static final int REQUEST_DATE = 0;
 
-    public static CrimeFragment newInstance(UUID crimeId){
+    public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CRIME_ID,crimeId);
+        args.putSerializable(ARG_CRIME_ID, crimeId);
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -96,4 +100,13 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_DATE && requestCode == Activity.RESULT_OK){
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mDateButton.setText(date.toString());
+            mCrime.setDate(date);
+        }
+
+    }
 }
