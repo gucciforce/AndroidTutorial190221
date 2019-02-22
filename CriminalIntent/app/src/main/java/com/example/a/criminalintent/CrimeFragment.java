@@ -1,6 +1,8 @@
 package com.example.a.criminalintent;
 
 
+import android.annotation.SuppressLint;
+import android.arch.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,20 +23,27 @@ import java.util.UUID;
 
 
 public class CrimeFragment extends Fragment {
+    private static final String ARG_CRIME_ID = "ARG_CRIME_ID";
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
-    public CrimeFragment() {
-        // Required empty public constructor
+    public static CrimeFragment newInstance(UUID crimeId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID,crimeId);
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         UUID crimId = (UUID) getActivity().getIntent()
-                .getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+                .getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);*/
+        UUID crimId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimId);
     }
 
