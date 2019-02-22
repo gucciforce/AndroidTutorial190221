@@ -89,7 +89,7 @@ public class CrimeLab {
     private static ContentValues getContentValues(Crime crime){
         ContentValues values = new ContentValues();
         values.put(Cols.UUID,crime.getId().toString());
-        values.put(Cols.TITLE,crime.getTitle().toString());
+        values.put(Cols.TITLE,crime.getTitle());
         values.put(Cols.DATE,crime.getDate().getTime());
         values.put(Cols.SOLVED,crime.isSolved()? 1:0);
 
