@@ -29,6 +29,7 @@ public class CrimeListFragment extends Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private boolean mSubTitleVisible;
 
 
     @Override
@@ -126,6 +127,12 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem item = menu.findItem(R.id.menu_item_show_subtitle);
+        if(mSubTitleVisible){
+            item.setTitle("서브타이틀 숨기기");
+        }else{
+            item.setTitle("서브타이틀 보이기");
+        }
         inflater.inflate(R.menu.fragment_crime_list, menu);
     }
 
@@ -139,6 +146,9 @@ public class CrimeListFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.menu_item_show_subtitle:
+                mSubTitleVisible = !mSubTitleVisible;
+                //메뉴새로생성
+                getActivity().invalidateOptionsMenu();
                 updateSubTitle();
                 return true;
         }
@@ -147,6 +157,8 @@ public class CrimeListFragment extends Fragment {
     private void updateSubTitle(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         String subTitle = "범죄 "+crimeLab.getCrimes().size();
+        if(!mSubTitleVisible) subTitle = null;
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(subTitle);
     }
 }
