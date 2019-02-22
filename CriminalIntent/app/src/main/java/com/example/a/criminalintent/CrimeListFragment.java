@@ -127,13 +127,13 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime_list, menu);
         MenuItem item = menu.findItem(R.id.menu_item_show_subtitle);
         if(mSubTitleVisible){
             item.setTitle("서브타이틀 숨기기");
         }else{
             item.setTitle("서브타이틀 보이기");
         }
-        inflater.inflate(R.menu.fragment_crime_list, menu);
     }
 
     @Override
