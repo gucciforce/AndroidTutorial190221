@@ -2,9 +2,11 @@ package com.example.a.criminalintent.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.a.criminalintent.database.CrimeBaseHelper;
+import com.example.a.criminalintent.database.CrimeCurserWrapper;
 import com.example.a.criminalintent.database.CrimeDbSchema;
 import com.example.a.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.a.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
@@ -19,8 +21,15 @@ public class CrimeLab {
     private SQLiteDatabase mDatabase;
     private Context mContext;
 
+
     public List<Crime> getCrimes() {
-        return new ArrayList<>();
+        List<Crime> crimes = new ArrayList<>();
+        CrimeCurserWrapper curser = queryCrimes(null, null);
+        while(curser.moveToNext()){
+            crimes.add(curser.getCrime());
+        }
+        curser.close();
+        return crimes;
     }
     public Crime getCrime(UUID id){
         /*
@@ -48,6 +57,11 @@ public class CrimeLab {
     public void updateCrime(Crime c){
         ContentValues values = getContentValues(c);
         mDatabase.update(CrimeTable.NAME, values,Cols.UUID+ " = ?", new String[]{ c.getId().toString()});
+    }
+
+    private CrimeCurserWrapper queryCrimes(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(CrimeTable.NAME, null, whereClause, whereArgs,null,null,null);
+        return new CrimeCurserWrapper(cursor);
     }
 
     private CrimeLab(Context context){
