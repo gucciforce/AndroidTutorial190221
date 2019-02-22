@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -137,7 +138,15 @@ public class CrimeListFragment extends Fragment {
                 Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId());
                 startActivity(intent);
                 return true;
+            case R.id.menu_item_show_subtitle:
+                updateSubTitle();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void updateSubTitle(){
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        String subTitle = "범죄 "+crimeLab.getCrimes().size();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(subTitle);
     }
 }

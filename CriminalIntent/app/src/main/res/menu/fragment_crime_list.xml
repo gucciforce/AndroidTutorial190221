@@ -5,4 +5,8 @@
         android:title="새로운 범죄"
         android:icon="@drawable/ic_add"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_item_show_subtitle"
+        android:title="서브타일보기"
+        app:showAsAction="ifRoom"/>
 </menu>
