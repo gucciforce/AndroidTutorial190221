@@ -39,7 +39,14 @@ public class CrimeLab {
             }
         }
         */
-        return null;
+        CrimeCurserWrapper cursor = queryCrimes(Cols.UUID + " = ?", new String[]{id.toString()});
+        if(cursor.getCount() == 0){
+            return null;
+        }
+        cursor.moveToFirst();
+        Crime crime = cursor.getCrime();
+        cursor.close();
+        return crime;
     }
 
     public static CrimeLab get(Context context){
