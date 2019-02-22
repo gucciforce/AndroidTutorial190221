@@ -4,15 +4,17 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Crime {
-        private UUID mId;
-        private  String mTitle;
-        private Date mData;
-        private  boolean Solved;
+    private UUID mId;
+    private String mTitle;
+    private Date mDate;
+    private boolean mSolved;
 
-        public Crime(){
-            mId = UUID.randomUUID();
-            mData = new Date();
-        }
+
+
+    public Crime(){
+        mId = UUID.randomUUID();
+        mDate = new Date();
+    }
 
     public UUID getId() {
         return mId;
@@ -30,19 +32,19 @@ public class Crime {
         mTitle = title;
     }
 
-    public Date getData() {
-        return mData;
+    public Date getDate() {
+        return mDate;
     }
 
-    public void setData(Date data) {
-        mData = data;
+    public void setDate(Date date) {
+        mDate = date;
     }
 
     public boolean isSolved() {
-        return Solved;
+        return mSolved;
     }
 
     public void setSolved(boolean solved) {
-        Solved = solved;
+        mSolved = solved;
     }
 }

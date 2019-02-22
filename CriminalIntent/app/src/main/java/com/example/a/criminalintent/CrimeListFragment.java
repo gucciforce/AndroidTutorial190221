@@ -1,6 +1,7 @@
 package com.example.a.criminalintent;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,7 @@ public class CrimeListFragment extends Fragment {
 
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Crime mCrime;
 
         private TextView mTextView;
@@ -55,20 +56,20 @@ public class CrimeListFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.list_item_crime_title_text_view);
-            mDateTextView = itemView.findViewById(R.id.list_item_cirme_date_text_view);
+            mDateTextView = itemView.findViewById(R.id.list_item_crime_date_text_view);
             mSolvedCheckBox = itemView.findViewById(R.id.list_item_crime_solved_checkbox);
         }
 
         public void bindCrime(Crime crime){
             mCrime = crime;
             mTextView.setText(crime.getTitle());
-            mDateTextView.setText(crime.getData().toString());
+            mDateTextView.setText(crime.getDate().toString());
             mSolvedCheckBox.setChecked(crime.isSolved());
         }
-
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(),mCrime.getTitle(),Toast.LENGTH_SHORT).show();
+            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            startActivity(intent);
         }
     }
 
@@ -91,7 +92,6 @@ public class CrimeListFragment extends Fragment {
         public void onBindViewHolder(@NonNull CrimeHolder crimeHolder, int i) {
             Crime crime = mCrimes.get(i);
             crimeHolder.bindCrime(crime);
-
         }
 
         @Override
