@@ -30,6 +30,7 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private boolean mSubTitleVisible;
+    private static final String SAVED_SUBTITLE_VISIVLE = "SAVED_SUBTITLE_VISIVLE";
 
 
     @Override
@@ -46,6 +47,10 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = v.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getActivity()) );
+        //최초엔 null
+        if(savedInstanceState != null){
+            mSubTitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIVLE);
+        }
         updateUI();
         return v;
     }
@@ -54,6 +59,12 @@ public class CrimeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_SUBTITLE_VISIVLE,mSubTitleVisible);
     }
 
     private void updateUI(){
@@ -161,4 +172,7 @@ public class CrimeListFragment extends Fragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(subTitle);
     }
+
+
+
 }
