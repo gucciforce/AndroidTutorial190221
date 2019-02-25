@@ -140,6 +140,9 @@ public class CrimeFragment extends Fragment {
             if(c.getCount() == 0) return;
             c.moveToFirst();
             String suspect = c.getString(0);
+            c.close();
+            mCrime.setSuspect(suspect);
+            mSuspectButton.setText(suspect);
         }
 
     }
