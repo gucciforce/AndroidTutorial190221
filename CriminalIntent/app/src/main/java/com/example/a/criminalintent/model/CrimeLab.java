@@ -11,6 +11,7 @@ import com.example.a.criminalintent.database.CrimeDbSchema;
 import com.example.a.criminalintent.database.CrimeDbSchema.CrimeTable;
 import com.example.a.criminalintent.database.CrimeDbSchema.CrimeTable.Cols;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -104,6 +105,11 @@ public class CrimeLab {
         values.put(Cols.SUSPECT,crime.getSuspect());
 
         return values;
+    }
+
+    public File getPhotoFile(Crime crime){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, crime.getPhotoFilename());
     }
 
 }
