@@ -5,7 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,7 +39,10 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mSuspectButton;
+
     private static final int REQUEST_DATE = 0;
+    private static final int REQUEST_CONTACT = 1;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -107,6 +113,15 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(isChecked);
             }
         });
+
+        final Intent pickIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        mSuspectButton = v.findViewById(R.id.crime_suspect_text);
+        mSuspectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(pickIntent, REQUEST_CONTACT);
+            }
+        });
         return v;
     }
 
@@ -116,6 +131,15 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mDateButton.setText(date.toString());
             mCrime.setDate(date);
+        }
+
+        if(requestCode == REQUEST_CONTACT && requestCode == Activity.RESULT_OK){
+            Uri contactUri = data.getData();
+            String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME};
+            Cursor c = getActivity().getContentResolver().query(contactUri,queryFields,null,null,null);
+            if(c.getCount() == 0) return;
+            c.moveToFirst();
+            String suspect = c.getString(0);
         }
 
     }
@@ -132,6 +156,7 @@ public class CrimeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_fragment_crime_delete:
+                //CrimeLab.get(getActivity()).deleteCrime(mCrime);
                 UUID crimId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
                 CrimeLab.get(getActivity()).delelteCriem(crimId.toString());
                 getActivity().finish();
