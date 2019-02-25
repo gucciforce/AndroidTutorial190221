@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -171,7 +172,7 @@ public class CrimeFragment extends Fragment {
                 startActivityForResult(captureImage, REQUEST_PHOTO);
             }
         });
-
+        updatePhotoView();
         return v;
     }
 
@@ -202,6 +203,12 @@ public class CrimeFragment extends Fragment {
             mSuspectButton.setText(suspect);
         }
 
+        if(requestCode == REQUEST_PHOTO && resultCode == Activity.RESULT_OK){
+            Uri uri = FileProvider.getUriForFile(getActivity(), "com.example.a.criminalintent.fileprovider", mPhotoFile);
+            getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updatePhotoView();
+        }
+
     }
 
     @Override
@@ -225,5 +232,14 @@ public class CrimeFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updatePhotoView(){
+        if(mPhotoFile == null || !mPhotoFile.exists()){
+            mPhotoView.setImageDrawable(null);
+        }else{
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            mPhotoView.setImageBitmap(bitmap);
+        }
     }
 }

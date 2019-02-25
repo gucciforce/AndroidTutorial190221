@@ -6,7 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 public class PictureUtils {
-    //원본이미지를 작은 이미지로 변환
+    //원본이미지사용시 메모리 문제 발생할수있음.
+    //샘플링하는 클래스
     public static Bitmap getScaledBitmap(String path, int destWidth, int destHeight){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
