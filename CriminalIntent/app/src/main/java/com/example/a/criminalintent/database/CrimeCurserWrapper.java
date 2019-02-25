@@ -15,8 +15,9 @@ public class CrimeCurserWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(Cols.TITLE));
         long date = getLong(getColumnIndex(Cols.DATE));
         int isSolved = getInt(getColumnIndex(Cols.SOLVED));
+        String suspect = getString(getColumnIndex(Cols.SUSPECT));
 
-        return new Crime(uuid, title, date, isSolved);
+        return new Crime(uuid, title, date, isSolved, suspect);
 
     }
 }

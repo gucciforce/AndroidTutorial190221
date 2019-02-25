@@ -8,12 +8,14 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private String mSuspect;
 
-    public Crime(String uuidString, String title, long date, int isSolved){
+    public Crime(String uuidString, String title, long date, int isSolved, String suspect){
         mId = UUID.fromString(uuidString);
         mTitle = title;
         mDate = new Date(date);
         mSolved = isSolved != 0;
+        mSuspect = suspect;
     }
 
 
@@ -26,9 +28,7 @@ public class Crime {
         return mId;
     }
 
-    public void setId(UUID id) {
-        mId = id;
-    }
+    public void setId(UUID id) { mId = id; }
 
     public String getTitle() {
         return mTitle;
@@ -53,4 +53,8 @@ public class Crime {
     public void setSolved(boolean solved) {
         mSolved = solved;
     }
+
+    public String getSuspect() { return mSuspect; }
+
+    public void setSuspect(String suspect) { mSuspect = suspect; }
 }

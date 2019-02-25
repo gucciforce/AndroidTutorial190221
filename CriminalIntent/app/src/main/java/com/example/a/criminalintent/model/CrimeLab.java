@@ -66,9 +66,14 @@ public class CrimeLab {
         mDatabase.update(CrimeTable.NAME, values,Cols.UUID+ " = ?", new String[]{ c.getId().toString()});
     }
 
+
     public void delelteCriem(String id){
         mDatabase.delete(CrimeTable.NAME, Cols.UUID+ " = ?", new String[]{id});
     }
+    /*
+    public void delelteCriem(Crime c){
+        mDatabase.delete(CrimeTable.NAME, Cols.UUID+ " = ?", new String[]{c.getId().toString()});
+    }*/
 
     private CrimeCurserWrapper queryCrimes(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(CrimeTable.NAME, null, whereClause, whereArgs,null,null,null);
@@ -96,6 +101,7 @@ public class CrimeLab {
         values.put(Cols.TITLE,crime.getTitle());
         values.put(Cols.DATE,crime.getDate().getTime());
         values.put(Cols.SOLVED,crime.isSolved()? 1:0);
+        values.put(Cols.SUSPECT,crime.getSuspect());
 
         return values;
     }
