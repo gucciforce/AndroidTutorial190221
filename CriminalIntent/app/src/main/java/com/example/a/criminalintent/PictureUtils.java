@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 public class PictureUtils {
+    //원본이미지를 작은 이미지로 변환
     public static Bitmap getScaledBitmap(String path, int destWidth, int destHeight){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
