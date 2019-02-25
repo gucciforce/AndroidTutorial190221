@@ -8,7 +8,7 @@ public class BeatBoxActivity extends SingleFragmentActivity{
 
     @Override
     protected Fragment createFragment() {
-        return BeatBoxFragment.ngetInstance();
+        return BeatBoxFragment.newInstance();
     }
 
 }
