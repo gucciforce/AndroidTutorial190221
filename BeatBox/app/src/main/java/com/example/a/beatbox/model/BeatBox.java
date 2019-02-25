@@ -1,10 +1,10 @@
 package com.example.a.beatbox.model;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,11 +30,12 @@ public class BeatBox {
         String[] soundNames;
         try {
             soundNames = mAssets.list(SOUND_FOLDER);
-            Log.d(TAG, "Found "+soundNames.length+" sounds.");
+            //Log.d(TAG, "Found "+soundNames.length+" sounds.");
 
             for(String filename: soundNames){
                 String assetPath = SOUND_FOLDER+"/"+filename;
                 Sound sound = new Sound(assetPath);
+                load(sound);
                 mSounds.add(sound);
             }
         } catch (IOException e) {
@@ -44,5 +45,11 @@ public class BeatBox {
 
     public List<Sound> getSounds() {
         return mSounds;
+    }
+
+    private void load(Sound sound) throws IOException {
+        AssetFileDescriptor afd = mAssets.openFd(sound.getAssetPath());
+        int soundId = mSoundPool.load(afd, 1);
+        sound.setSoundId(soundId);
     }
 }
