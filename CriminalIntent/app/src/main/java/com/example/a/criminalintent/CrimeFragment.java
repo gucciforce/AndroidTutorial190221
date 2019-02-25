@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -122,6 +123,10 @@ public class CrimeFragment extends Fragment {
                 startActivityForResult(pickIntent, REQUEST_CONTACT);
             }
         });
+        PackageManager packageManager = getActivity().getPackageManager();
+        if(packageManager.resolveActivity(pickIntent, PackageManager.MATCH_DEFAULT_ONLY) == null){
+            mSuspectButton.setEnabled(false);
+        }
         return v;
     }
 
@@ -133,7 +138,7 @@ public class CrimeFragment extends Fragment {
             mCrime.setDate(date);
         }
 
-        if(requestCode == REQUEST_CONTACT && requestCode == Activity.RESULT_OK){
+        if(requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK){
             Uri contactUri = data.getData();
             String[] queryFields = new String[]{ContactsContract.Contacts.DISPLAY_NAME};
             Cursor c = getActivity().getContentResolver().query(contactUri,queryFields,null,null,null);
