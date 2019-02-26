@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SoundViewModelTest {
     private BeatBox mBeatBox;
@@ -21,6 +22,16 @@ public class SoundViewModelTest {
     }
     @Test
     public void exposesSoundNameAsTitle(){
+        //결과가 같은지 확인하는 테스트
         assertThat(mSubject.getTitle(),is(mSound.getName()));
+    }
+
+    @Test
+    public void callsBeatBoxPlayOnButtonClicked(){
+        mSubject.onButoonClicked();
+
+        //verify(mBeatBox).play(mSound);
+        verify(mBeatBox);
+        mBeatBox.play(mSound);
     }
 }
