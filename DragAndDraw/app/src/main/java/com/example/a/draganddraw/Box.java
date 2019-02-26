@@ -5,9 +5,12 @@ import android.graphics.PointF;
 public class Box {
     private PointF mOrigin;
     private PointF mCurrent;
-    public Box(PointF current){
-        mCurrent = current;
+
+    public Box(PointF origin) {
+        mOrigin = origin;
+        mCurrent = origin;
     }
+
     public PointF getOrigin() {
         return mOrigin;
     }

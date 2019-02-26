@@ -8,12 +8,8 @@ public class DragAndDrawActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new DragAndDrawFragment();
+        return DragAndDrawFragment.newInstance();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+
 }
