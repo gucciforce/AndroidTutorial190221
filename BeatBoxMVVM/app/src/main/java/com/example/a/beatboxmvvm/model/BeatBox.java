@@ -6,6 +6,8 @@ import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
+import com.example.a.beatboxmvvm.model.Sound;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,8 @@ public class BeatBox {
         sound.setSoundId(soundId);
     }
     public void play(Sound sound){
-        if(sound.getSoundId() == null) return;
+        if(sound.getSoundId() == null)
+            return;
         mSoundPool.play(sound.getSoundId(), 1.0f, 1.0f,
                 1, 0, 1.0f);
     }
