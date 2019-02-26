@@ -1,5 +1,7 @@
 package com.example.a.beatbox_mvvm.model;
 
+import android.media.SoundPool;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,10 +30,12 @@ public class SoundViewModelTest {
 
     @Test
     public void callsBeatBoxPlayOnButtonClicked(){
-        mSubject.onButoonClicked();
+        mSubject.onButtonClicked();
 
         //verify(mBeatBox).play(mSound);
         verify(mBeatBox);
         mBeatBox.play(mSound);
     }
+
+
 }
